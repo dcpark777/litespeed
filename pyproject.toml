@@ -1,0 +1,59 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "nova"
+version = "0.1.0"
+description = "Local-first cockpit for orchestrating Claude Code work: sessions, gates, memory, campaigns."
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn>=0.30",
+    "pydantic>=2.7",
+    "typer>=0.12",
+    "rich>=13.7",
+    "watchfiles>=0.22",
+    "python-ulid>=2.6",
+    "ruamel.yaml>=0.18",
+    "tenacity>=8.3",
+    "keyring>=25.0",
+]
+
+[project.optional-dependencies]
+# Isolated on purpose: everything except sessions.runner works without the SDK,
+# so the package remains installable/testable regardless of smoke-test outcome.
+agent = ["claude-agent-sdk==0.2.110"]  # feasibility-verified 2026-07; rerun nova_feasibility.py --full before repinning
+window = ["pywebview>=5.1"]
+aws = ["boto3>=1.34"]
+schedule = ["apscheduler>=3.10"]
+dev = ["pytest>=8.2", "ruff>=0.5", "import-linter>=2.0", "httpx>=0.27", "pytest-asyncio>=0.23"]
+
+[project.scripts]
+nova = "nova.cli:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/nova"]
+# CI copies frontend/dist -> src/nova/static before `uv build`; static ships in the wheel.
+artifacts = ["src/nova/static/**"]
+
+[tool.ruff]
+line-length = 100
+src = ["src", "tests"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+
+# Contract enforcement: features may import contracts; contracts never import features.
+[tool.importlinter]
+root_package = "nova"
+
+[[tool.importlinter.contracts]]
+name = "C0 modules do not depend on feature modules"
+type = "forbidden"
+source_modules = ["nova.events", "nova.secrets", "nova.connectors", "nova.config", "nova.audit"]
+forbidden_modules = [
+    "nova.sessions", "nova.workstreams", "nova.campaigns",
+    "nova.gates", "nova.memory", "nova.server",
+]

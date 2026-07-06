@@ -1,0 +1,4 @@
+{"type":"user","sessionId":"s_demo01","timestamp":"2026-07-01T14:00:00Z","message":{"role":"user","content":"bump kubekit to 2.3 and fix imports"}}
+{"type":"assistant","sessionId":"s_demo01","timestamp":"2026-07-01T14:00:04Z","message":{"role":"assistant","content":[{"type":"text","text":"Scanning imports..."}]}}
+{"type":"future_record_type","sessionId":"s_demo01","timestamp":"2026-07-01T14:00:05Z","data":{"note":"unknown types must survive as passthrough"}}
+{"type":"result","sessionId":"s_demo01","timestamp":"2026-07-01T14:01:00Z","subtype":"success","total_cost_usd":0.021,"num_turns":3}

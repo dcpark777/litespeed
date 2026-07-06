@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.venv/
+dist/
+node_modules/
+frontend/dist/
+src/nova/static/*
+!src/nova/static/.gitkeep
+.pytest_cache/
+.ruff_cache/
+index.db

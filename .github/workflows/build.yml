@@ -1,0 +1,19 @@
+name: build-wheel
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+jobs:
+  wheel:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "20" }
+      - run: cd frontend && npm ci && npm run build   # emits into src/nova/static
+      - uses: astral-sh/setup-uv@v3
+      - run: uv build
+      - run: uv run --with 'nova[dev] @ .' pytest
+      - uses: softprops/action-gh-release@v2          # Stage 1: release-asset installs
+        if: startsWith(github.ref, 'refs/tags/')
+        with: { files: dist/*.whl }
