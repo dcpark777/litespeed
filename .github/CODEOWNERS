@@ -1,0 +1,20 @@
+# Ownership map (see docs/module-ownership.md for the human version).
+# NOTE: automatic review-request enforcement requires branch protection on the
+# internal GitHub instance (availability unknown) — this file is authoritative
+# documentation either way. Replace @dan-placeholder with the real handle.
+
+# Contracts + shared surface — Dan only
+/src/nova/events/            @dan-placeholder
+/src/nova/secrets/           @dan-placeholder
+/src/nova/connectors/        @dan-placeholder
+/src/nova/config/            @dan-placeholder
+/src/nova/audit/             @dan-placeholder
+/SPEC.md                     @dan-placeholder
+/pyproject.toml              @dan-placeholder
+/tests/fixtures/golden/      @dan-placeholder
+/Makefile                    @dan-placeholder
+/.githooks/                  @dan-placeholder
+/scripts/check_staged.py     @dan-placeholder
+/CLAUDE.md                   @dan-placeholder
+
+# Feature modules — claim at kickoff (docs/module-ownership.md)
