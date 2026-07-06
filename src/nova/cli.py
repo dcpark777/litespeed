@@ -46,7 +46,9 @@ def doctor() -> None:
     """Validate the environment (SPEC §9). Safe to run before anything else —
     this IS the productized Phase 0 smoke test's read-only half."""
     t = Table(title="nova doctor")
-    t.add_column("check"); t.add_column("status"); t.add_column("detail")
+    t.add_column("check")
+    t.add_column("status")
+    t.add_column("detail")
 
     claude = shutil.which("claude")
     t.add_row("claude binary", _ok(bool(claude)), claude or "not on PATH")

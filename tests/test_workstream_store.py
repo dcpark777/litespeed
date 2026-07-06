@@ -1,6 +1,6 @@
 from datetime import datetime, timezone
 
-from nova.workstreams.models import Gate, Status, Workstream, WorkstreamType
+from nova.workstreams.models import Gate, Workstream, WorkstreamType
 from nova.workstreams.store import WorkstreamStore
 
 

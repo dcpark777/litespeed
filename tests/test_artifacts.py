@@ -11,7 +11,8 @@ def test_load_artifact(tmp_path):
 
 def test_later_dir_overrides_by_id(tmp_path):
     a, b = tmp_path / "a", tmp_path / "b"
-    a.mkdir(); b.mkdir()
+    a.mkdir()
+    b.mkdir()
     (a / "x.md").write_text("---\nid: d\nversion: '1'\n---\nold")
     (b / "x.md").write_text("---\nid: d\nversion: '2'\n---\nnew")
     merged = load_dir(a) | load_dir(b)

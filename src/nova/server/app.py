@@ -17,7 +17,7 @@ from pydantic import BaseModel
 
 from nova.events.store import EventStore
 from nova.index.db import connect
-from nova.workstreams.models import Gate, Status, Workstream, WorkstreamType
+from nova.workstreams.models import Gate, Workstream, WorkstreamType
 from nova.workstreams.store import WorkstreamStore
 
 LAUNCH_TOKEN = os.environ.get("NOVA_TOKEN") or secrets.token_urlsafe(32)
