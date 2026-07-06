@@ -13,7 +13,7 @@ def test_reindex_from_fixtures_and_notes(tmp_path):
 
     inbox = tmp_path / "inbox"
     Note(type=NoteType.decision, title="kubekit bump decision",
-         body="ghp_abcdefghij0123456789XYZ must be scrubbed; kubekit pinned to 2.3").write(inbox)
+         body="ghp_abcdefghij0123456789XYZ must be scrubbed; kubekit pinned to 2.3").write(inbox)  # nova:allow-secret
 
     db = tmp_path / "index.db"
     stats = reindex(db, tmp_path / "projects", [inbox])
@@ -23,7 +23,7 @@ def test_reindex_from_fixtures_and_notes(tmp_path):
     assert hits, "FTS should find the note and transcript"
 
     # redaction applied at ingestion: the token never reaches the index
-    assert not search(db, '"ghp_abcdefghij0123456789XYZ"')
+    assert not search(db, '"ghp_abcdefghij0123456789XYZ"')  # nova:allow-secret
     assert search(db, "REDACTED")
 
 

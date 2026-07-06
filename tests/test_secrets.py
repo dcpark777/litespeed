@@ -20,7 +20,7 @@ def test_unknown_scheme_raises():
 
 
 def test_redaction_catches_common_shapes():
-    leaky = "key AKIAABCDEFGHIJKLMNOP and token ghp_abcdefghij0123456789XYZ"
+    leaky = "key AKIAABCDEFGHIJKLMNOP and token ghp_abcdefghij0123456789XYZ"  # nova:allow-secret
     assert contains_secret(leaky)
     clean = scrub(leaky)
     assert "AKIA" not in clean and "ghp_" not in clean and REDACTED in clean

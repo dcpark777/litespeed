@@ -1,0 +1,32 @@
+#!/bin/sh
+# Nova pre-commit gate. Installed via `make hooks` (git config core.hooksPath .githooks).
+# Runs: staged secret/transcript scan, ruff, import-linter, test suite (~seconds total).
+set -e
+
+# git exports GIT_DIR/GIT_INDEX_FILE/... into hooks; they leak into the test
+# suite's nested git subprocesses (worktree tests) and misdirect them. Unset
+# everything git considers repo-local before running anything.
+for v in $(git rev-parse --local-env-vars); do
+    unset "$v"
+done
+
+if [ ! -x .venv/bin/python ]; then
+    echo "pre-commit: .venv/bin/python not found." >&2
+    echo "Run 'make setup' first. Bare 'python'/'pytest' is the pyenv shim trap" >&2
+    echo "(see CLAUDE.md) — the hooks only ever use the project venv." >&2
+    exit 1
+fi
+
+fail() {
+    echo "" >&2
+    echo "pre-commit gate failed: $1" >&2
+    echo "Fix it, don't bypass it — committing with --no-verify violates CLAUDE.md." >&2
+    exit 1
+}
+
+.venv/bin/python scripts/check_staged.py || fail "secret/transcript scan"
+.venv/bin/python -m ruff check . || fail "ruff"
+.venv/bin/lint-imports || fail "import-linter (C0 contract)"
+.venv/bin/python -m pytest -q || fail "test suite"
+
+exit 0
