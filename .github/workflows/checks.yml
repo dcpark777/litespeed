@@ -1,0 +1,29 @@
+# Best-effort server-side backstop for the client-side gates (.githooks/).
+# Primary enforcement is `make check` + the pre-commit hook — this workflow may
+# not run at all on an internal GitHub instance without Actions runners; treat
+# it as advisory. Deliberately no frontend build (network-dependent; the
+# tag-triggered build.yml handles releases).
+name: checks
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install
+        run: python -m pip install -e '.[dev]'
+      - name: Lint
+        run: python -m ruff check .
+      - name: Import contracts (C0)
+        run: lint-imports
+      - name: Tests
+        run: python -m pytest -q
+      - name: Secret / transcript scan
+        run: python scripts/check_staged.py --all
