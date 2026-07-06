@@ -17,8 +17,10 @@ inputs: [transcript]         # what the caller must supply
 
 Layout:
 
-- `distillers/` — session → memory-inbox candidate prompts (SPEC §6; Phase 3,
-  none written yet)
+- `distillers/` — session → memory-inbox candidate prompts (SPEC §6).
+  `distiller-default.md` is the shipped v0 baseline; Phase 3 iterates on it
+  (bump `version` on any prompt change). Keep non-artifact files (READMEs)
+  out of artifact subdirectories — `load_dir` globs every `*.md`.
 - playbooks, classifiers, and edit-templates get sibling directories when the
   first one exists (SPEC §5.4, §3.4.2)
 

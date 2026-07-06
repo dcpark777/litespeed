@@ -8,7 +8,7 @@
 Runbook Steps 1–4 DONE: repo initialized, deps pinned (claude-agent-sdk==0.2.110),
 live probe passed (PIPELINE_OK over Bedrock). Step 5 PARTIAL (personal machine):
 2 real probe fixtures committed, replayer splits nested tool blocks; baseline
-43 passed, 1 skipped. Guardrail scaffold in place (Makefile, .githooks, docs/).
+44 passed, 1 skipped. Guardrail scaffold in place (Makefile, .githooks, docs/).
 Step 6 (parity) + richer work fixtures happen ON THE WORK MACHINE — see
 docs/hackathon-worksplit.md Track 6, including the ts-in-identity-key landmine.
 
@@ -27,7 +27,7 @@ docs/hackathon-worksplit.md Track 6, including the ts-in-identity-key landmine.
   pattern anywhere, stop and surface it.
 - Tests: `.venv/bin/python -m pytest -q` — always the venv binary explicitly;
   bare `python`/`pytest` hits the pyenv shim and nova isn't installed there.
-  Suite must be green before any commit. Current baseline: 43 passed, 1 skipped
+  Suite must be green before any commit. Current baseline: 44 passed, 1 skipped
   (the skip is test_stream_replay_parity, closed at runbook Step 6).
 - Small commits, conventional prefixes (events:, fix:, docs:, scaffold:).
 - The SDK pin is sacred: repin only after scripts/nova_feasibility.py --full passes.
