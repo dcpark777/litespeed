@@ -1,6 +1,6 @@
 # Nova — Platform Specification
 
-**Version:** 0.2.0-draft · **Status:** pre-implementation · **Owner:** Dan
+**Version:** 0.2.1-draft · **Status:** pre-implementation · **Owner:** Dan
 **One-liner:** A lightweight, local-first desktop cockpit for orchestrating Claude Code work — sessions, review gates, curated memory, and fleet campaigns — for a Bedrock-authenticated, sandboxed enterprise environment.
 
 ---
@@ -104,7 +104,7 @@ Rules:
   - Type 1 (repo/PR): standard tool gating; write access scoped to the worktree.
   - Type 2 (ephemeral): permissive within scratch dir.
   - Type 3 (maintained): file edits permissive within its repo; **external side-effects always gated** (change-plan review before apply).
-- **Audit log:** append-only JSONL in `~/.nova/audit/`, one record per: tool permission decision, gate decision (accept/reject/revise), external apply, campaign launch, memory promotion. Fields: ts, actor (user|policy), workstream_id, session_id, action, subject, decision, rationale?. Never stored in shared git; exportable on demand.
+- **Audit log:** append-only JSONL in `~/.nova/audit/`, one record per: tool permission decision, gate decision (accept/reject/revise), external apply, campaign launch, memory promotion. Fields: audit_version (REQUIRED, currently 1; readers support N and N−1), ts, actor (user|policy), action, subject, workstream_id?, session_id?, decision?, rationale?. The typed model in `nova.audit.log.AuditRecord` is the normative shape — callers construct it, never free-form dicts. Never stored in shared git; exportable on demand.
 - SDK `PreToolUse` hooks implement interception; keep hook bodies fast (they sit on the agent's critical path). Verify org managed-settings does not set `disableAllHooks` (see §13 smoke test).
 
 ### 3.4 Extension seams — **C0**
