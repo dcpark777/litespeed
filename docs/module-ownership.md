@@ -26,7 +26,7 @@ Replace placeholders with internal GitHub handles at kickoff.
 | `frontend/` + `src/nova/server/` | §7 | test_server.py | _Owner-1_ |
 | `src/nova/workstreams/` | §5.1–5.2 | test_workstream_store.py, test_worktrees.py | _Owner-2_ |
 | `src/nova/sessions/` | §5.3, §3.2 | test_runner.py, test_leases.py | _Owner-3_ |
-| `src/nova/gates/` (empty stub) | §5.5 | — | _Owner-4_ |
+| `src/nova/gates/` (GateDecision model done) | §5.5 | test_gates.py | _Owner-4_ |
 | `src/nova/index/` + `src/nova/cli.py` (doctor) | §4, §9 | test_db.py, test_reindex.py | _Owner-5_ |
 | `src/nova/memory/` | §6 | test_notes.py, test_artifacts.py | _Owner-6_ |
 | `src/nova/campaigns/` (empty stub) | §5.4 | — | post-hackathon |
